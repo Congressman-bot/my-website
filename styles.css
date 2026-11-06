@@ -8,6 +8,11 @@
     list-style: none;
 }
 
+body{
+    background-color: black;
+    overflow-x: hidden;
+}
+
 header{
     position: fixed;
     top: 1rem;
