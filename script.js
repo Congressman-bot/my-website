@@ -1,9 +1,11 @@
 const navLinks = document.querySelector('nav');
 const hamburger = document.getElementById('hamburger');
 
-hamburger.addEventListener('click', function() {
-    navLinks.classList.toggle('active');
-});
+if(hamburger) {
+    hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('hidden');
+    });
+}
 
 const form = document.getElementById("myForm");
 const successCard = document.getElementById("successCard");
