@@ -587,6 +587,10 @@ footer ul li a{
     }
 }
 @media (max-width: 600px) {
+    body{
+        overflow-x: hidden;
+    }
+    
     header .menu-icon{
         display: none;
     }
