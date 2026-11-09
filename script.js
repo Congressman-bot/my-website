@@ -34,25 +34,40 @@ if (hamburger && mobileMenu) {
 const form = document.getElementById("myForm");
 const successCard = document.getElementById("successCard");
 const checkIcon = document.getElementById("check-icon");
+const demoModal = document.getElementById('demoModal');
+let previousBodyOverflow = '';
+let toastTimeout;
+
+function showToast() {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove('is-visible');
+    }, 3000);
+}
 
 // Function to open the modal
 function openDemoModal(url) {
-    const modal = document.getElementById('demoModal');
+    const modal = demoModal;
     const iframe = document.getElementById('demoIframe');
     const urlInput = document.getElementById('demoUrlInput');
     const externalLink = document.getElementById('demoExternalLink');
+    if (!modal || !iframe) return;
 
-    // Make sure we have a valid URL or fallback
     const targetUrl = url || 'https://your-app.vercel.app';
-
-    // Set initial URL
     iframe.src = targetUrl;
     if (urlInput) urlInput.value = targetUrl;
     if (externalLink) externalLink.href = targetUrl;
 
-    // Show modal
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    if (!modal.classList.contains('is-open')) {
+        previousBodyOverflow = document.body.style.overflow;
+    }
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.inert = false;
     document.body.style.overflow = 'hidden';
 }
 
@@ -89,15 +104,16 @@ function handleUrlSubmit(event) {
 
 // Function to close modal
 function closeDemoModal() {
-    const modal = document.getElementById('demoModal');
+    const modal = demoModal;
     const iframe = document.getElementById('demoIframe');
 
-    if (modal) {
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-    }
-    if (iframe) iframe.src = 'about:blank'; // Clear iframe
-    document.body.style.overflow = '';
+    if (!modal || !modal.classList.contains('is-open')) return;
+
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.inert = true;
+    if (iframe) iframe.src = 'about:blank';
+    document.body.style.overflow = previousBodyOverflow;
 }
 
 // Close on ESC key
@@ -122,10 +138,4 @@ form.addEventListener("submit", async (e) => {
 });
 
 const toastButton = document.getElementById('toastBtn');
-toastButton.addEventListener('click', () => {
-    const toast = document.getElementById('toast');
-    toast.classList.remove('hidden');
-    setTimeout(() => {
-        toast.classList.add('hidden');
-    }, 3000);
-});
+if (toastButton) toastButton.addEventListener('click', showToast);
