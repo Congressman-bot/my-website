@@ -6,11 +6,13 @@
     text-decoration: none;
     scroll-behavior: smooth;
     list-style: none;
+    outline: 1px solid red;
 }
 
-body{
+html, body{
     background-color: black;
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 header{
@@ -295,8 +297,8 @@ section{
 
 .grid{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 1.5rem;
 }
 
 .grid-card{
@@ -575,9 +577,9 @@ footer ul li a{
     .input-box i{
         display: none;
     }
-    .grid{
+    /* .grid{
         grid-template-columns: repeat(1,1fr);
-    }
+    } */
     .experience-info .image{
         width: 70vw;
     }
@@ -590,7 +592,7 @@ footer ul li a{
     body{
         overflow-x: hidden;
     }
-    
+
     header .menu-icon{
         display: none;
     }
